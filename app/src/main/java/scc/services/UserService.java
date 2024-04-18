@@ -1,17 +1,9 @@
 package main.java.scc.services;
 
-import jakarta.ws.rs.CookieParam;
-import jakarta.ws.rs.core.Cookie;
 import main.java.scc.data.User;
 import main.java.scc.data.UserDAO;
-import main.java.scc.db.HouseRepository;
-import main.java.scc.db.QuestionRepository;
-import main.java.scc.db.RentalRepository;
 import main.java.scc.db.UserRepository;
-import main.java.scc.db.comosdb.*;
-import main.java.scc.db.hibernate.HibernateUserRepository;
 import main.java.scc.srv.MainApplication;
-import org.jboss.jandex.Main;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;
@@ -37,12 +29,9 @@ public class UserService {
         return userDB.create(userDAO).toUser();
     }
 
-    public static User update(@CookieParam("scc:session") Cookie session, String id, User user) {
+    public static User update(String id, User user) {
         UserRepository userDB = MainApplication.DB_LAYER.getUsersRepository();
         UserDAO userDAO = userDB.get(id);
-
-        //Check permission
-        AuthService.verifyUser(session, userDAO.getId());
 
         // Fields to update
         if (user.getName() != null)
@@ -58,23 +47,9 @@ public class UserService {
         return userDB.get(id).toUser();
     }
 
-    public static Object delete(@CookieParam("scc:session") Cookie session, String id) {
+    public static Object delete(String id) {
         UserRepository userDB = MainApplication.DB_LAYER.getUsersRepository();
-        HouseRepository houseDB = MainApplication.DB_LAYER.getHousesRepository();
         UserDAO userDAO = userDB.get(id);
-
-        //Check permission
-        AuthService.verifyUser(session, userDAO.getId());
-
-        //Delete all houses
-        houseDB.deleteAllByUser(id);
-
-        RentalRepository rentalDB = MainApplication.DB_LAYER.getRentalsRepository();
-        QuestionRepository questionDB = MainApplication.DB_LAYER.getQuestionsRepository();
-
-        //Delete all rentals and messages
-        rentalDB.deleteAllByUser(id);
-        questionDB.deleteAllByUser(id);
 
         return userDB.delete(userDAO);
     }

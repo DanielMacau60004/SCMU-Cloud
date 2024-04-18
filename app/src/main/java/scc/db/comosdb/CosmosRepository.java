@@ -7,7 +7,6 @@ import com.azure.cosmos.CosmosContainer;
 import com.azure.cosmos.CosmosDatabase;
 import com.azure.cosmos.models.*;
 
-import main.java.scc.cache.Cache;
 import main.java.scc.db.Repository;
 
 import javax.ws.rs.NotFoundException;
@@ -15,14 +14,6 @@ import javax.ws.rs.NotFoundException;
 public abstract class CosmosRepository<T> implements Repository<T> {
 
     private static final int ERROR_CODE = 300;
-
-    private static final String CACHE_GET_KEY = "Get-{%s}-{%s}";
-    private static final long CACHE_GET_TIME = 30;
-    private static final String CACHE_LIST_KEY = "List-{%s}";
-    private static final long CACHE_LIST_TIME = 60;
-
-    private static final String CACHE_PARTITION_LIST_KEY = "List-{%s}-{%s}";
-    private static final long CACHE_PARTITION_LIST_TIME = 60;
     private static final String GET_QUERY = "SELECT * FROM %s WHERE %s.id=\"%s\"";
 
     private static final String SELECT_QUERY = "SELECT * FROM %s";
@@ -36,6 +27,7 @@ public abstract class CosmosRepository<T> implements Repository<T> {
     private final Class<T> clazz;
 
     public abstract String getId(T entity);
+
     public abstract PartitionKey getPartitionKey(T entity);
 
     public CosmosRepository(CosmosClient client, String databaseName, String containerName, Class<T> clazz) {
@@ -60,7 +52,6 @@ public abstract class CosmosRepository<T> implements Repository<T> {
         if (response.getStatusCode() >= ERROR_CODE)
             throw new NotFoundException();
 
-        Cache.del(CACHE_GET_KEY.formatted(containerName, getId(entity)));
         return response.getItem();
     }
 
@@ -72,7 +63,6 @@ public abstract class CosmosRepository<T> implements Repository<T> {
         if (response.getStatusCode() >= ERROR_CODE)
             throw new NotFoundException();
 
-        Cache.set(CACHE_GET_KEY.formatted(containerName, getId(entity)), entity, CACHE_GET_TIME);
         return response.getItem();
     }
 
@@ -84,16 +74,15 @@ public abstract class CosmosRepository<T> implements Repository<T> {
         if (response.getStatusCode() >= ERROR_CODE)
             throw new NotFoundException();
 
-        Cache.set(CACHE_GET_KEY.formatted(containerName, getId(entity)), entity, CACHE_GET_TIME);
         return response.getItem();
     }
 
     public T get(String id) {
         init();
 
-        T obj = Cache.get(CACHE_GET_KEY.formatted(containerName, id), clazz, CACHE_GET_TIME, () -> container
+        T obj = container
                 .queryItems(GET_QUERY.formatted(containerName, containerName, id), new CosmosQueryRequestOptions(), clazz)
-                .stream().findFirst().orElse(null));
+                .stream().findFirst().orElse(null);
 
         if (obj == null)
             throw new NotFoundException();
@@ -104,14 +93,12 @@ public abstract class CosmosRepository<T> implements Repository<T> {
     public List<T> list() {
         init();
 
-        return Cache.lrange(CACHE_LIST_KEY.formatted(containerName), 0, -1, clazz, CACHE_LIST_TIME, () -> container
-                .queryItems(SELECT_QUERY.formatted(containerName), new CosmosQueryRequestOptions(), clazz).stream().toList());
+        return container.queryItems(SELECT_QUERY.formatted(containerName), new CosmosQueryRequestOptions(), clazz).stream().toList();
     }
 
     public List<T> listByPartition(String partitionKey) {
         init();
-        return Cache.lrange(CACHE_PARTITION_LIST_KEY.formatted(containerName, partitionKey), 0, -1, clazz, CACHE_PARTITION_LIST_TIME, () ->
-                container.readAllItems(new PartitionKey(partitionKey), new CosmosQueryRequestOptions(), clazz).stream().toList());
+        return container.readAllItems(new PartitionKey(partitionKey), new CosmosQueryRequestOptions(), clazz).stream().toList();
     }
 
     public void close() {

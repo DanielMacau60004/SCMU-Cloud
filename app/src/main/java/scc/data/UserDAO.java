@@ -1,18 +1,10 @@
 package main.java.scc.data;
 
-import javax.persistence.*;
-
-/**
- * Represents a User, as stored in the database
- */
-@Entity
-@Table(name = "users")
 public class UserDAO {
 
 	private String _rid;
 	private String _ts;
 
-	@Id
 	private String id;
 	private String name;
 	private String pwd;
