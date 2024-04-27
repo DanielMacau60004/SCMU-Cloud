@@ -2,27 +2,23 @@ package main.java.scc.data;
 
 import java.util.Collections;
 
-public class BoardConfig {
+public class Board {
 
     private String id;
     private boolean active;
-    private long nextTime;
-    private long currentTime;
     private long duration;
     private long hourToStart;
     private boolean[] rotation;
 
-    public BoardConfig() {
+    public Board() {
     }
 
-    public BoardConfig(String id, boolean active, long nextTime, long currentTime, long duration,
-                       long hourToStart, boolean[] rotation) {
+    public Board(String id, boolean active, long duration,
+                 long hourToStart, boolean[] rotation) {
         super();
         this.id = id;
         this.active = active;
-        this.nextTime = nextTime;
         this.duration = duration;
-        this.currentTime = currentTime;
         this.hourToStart = hourToStart;
         this.rotation = rotation;
 
@@ -38,22 +34,6 @@ public class BoardConfig {
 
     public boolean isActive() {
         return active;
-    }
-
-    public void setNextTime(long nextTime) {
-        this.nextTime = nextTime;
-    }
-
-    public long getNextTime() {
-        return nextTime;
-    }
-
-    public void setCurrentTime(long currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public long getCurrentTime() {
-        return currentTime;
     }
 
     public void setDuration(long duration) {
@@ -83,8 +63,7 @@ public class BoardConfig {
 
     @Override
     public String toString() {
-        return "BoardConfig[id=" + id + ", active=" + active + ", nextTime=" + nextTime
-                + ", currentTime=" + currentTime + ", duration=" + duration + ", hourToStart=" + hourToStart +
+        return "BoardConfig[id=" + id + ", active=" + active + ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + "]";
     }
 

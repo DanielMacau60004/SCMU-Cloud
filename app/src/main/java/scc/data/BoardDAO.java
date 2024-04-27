@@ -2,32 +2,32 @@ package main.java.scc.data;
 
 import java.util.Collections;
 
-public class BoardConfigDAO {
+public class BoardDAO {
 
     private String _rid;
     private String _ts;
 
-    private final String id;
+    private String id;
     private boolean active;
-    private long nextTime;
-    private long currentTime;
     private long duration;
     private long hourToStart;
     private boolean[] rotation;
 
-    public BoardConfigDAO(BoardConfig b) {
-        this(b.getId(), b.isActive(), b.getNextTime(), b.getCurrentTime()
+    public BoardDAO() {
+
+    }
+
+    public BoardDAO(Board b) {
+        this(b.getId(), b.isActive()
                 , b.getDuration(), b.getHourToStart(), b.getRotation());
     }
 
-    public BoardConfigDAO(String id, boolean active, long nextTime, long currentTime, long duration,
-                          long hourToStart, boolean[] rotation) {
+    public BoardDAO(String id, boolean active, long duration,
+                    long hourToStart, boolean[] rotation) {
         super();
         this.id = id;
         this.active = active;
-        this.nextTime = nextTime;
         this.duration = duration;
-        this.currentTime = currentTime;
         this.hourToStart = hourToStart;
         this.rotation = rotation;
 
@@ -53,28 +53,16 @@ public class BoardConfigDAO {
         this.active = active;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
 
     public boolean isActive() {
         return active;
-    }
-
-    public void setNextTime(long nextTime) {
-        this.nextTime = nextTime;
-    }
-
-    public long getNextTime() {
-        return nextTime;
-    }
-
-    public void setCurrentTime(long currentTime) {
-        this.currentTime = currentTime;
-    }
-
-    public long getCurrentTime() {
-        return currentTime;
     }
 
     public void setDuration(long duration) {
@@ -101,15 +89,15 @@ public class BoardConfigDAO {
         return rotation;
     }
 
-    public BoardConfig toBoardConfig() {
-        return new BoardConfig(id, active, nextTime, currentTime, duration,
+    public Board toBoard() {
+        return new Board(id, active, duration,
                 hourToStart, rotation);
     }
 
     @Override
     public String toString() {
-        return "BoardConfigDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active + ", nextTime=" + nextTime
-                + ", currentTime=" + currentTime + ", duration=" + duration + ", hourToStart=" + hourToStart +
+        return "BoardConfigDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
+                ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + "]";
     }
 

@@ -33,17 +33,24 @@ public class CosmosDBLayer implements DBLayerRepository {
 
     }
 
-    private final CosmosDBUserRepository users;
+    private final CosmosDBBoardRepository boards;
+    private final CosmosDBDataRepository data;
 
     public CosmosDBLayer(CosmosClient client) {
-        users = new CosmosDBUserRepository(client, DB_NAME);
+        boards = new CosmosDBBoardRepository(client, DB_NAME);
+        data = new CosmosDBDataRepository(client, DB_NAME);
     }
 
-    public UserRepository getUsersRepository() {
-        return users;
+    public BoardRepository getBoardsRepository() {
+        return boards;
+    }
+
+    public DataRepository getDataRepository() {
+        return data;
     }
 
     public void close() {
-        users.close();
+        boards.close();
+        data.close();
     }
 }

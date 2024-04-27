@@ -2,6 +2,7 @@ package main.java.scc.data;
 
 public class Data {
 
+    private String id;
     private float temp;
     private float hum;
     private long t;
@@ -9,11 +10,16 @@ public class Data {
     public Data() {
     }
 
-    public Data(float temp, float hum, long t) {
+    public Data(String id, float temp, float hum, long t) {
         super();
+        this.id = id;
         this.temp = temp;
         this.hum = hum;
         this.t = t;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public float getTemp() {
@@ -29,12 +35,12 @@ public class Data {
     }
 
     public Data toData() {
-        return new Data(temp, hum, t);
+        return new Data(id, temp, hum, t);
     }
 
     @Override
     public String toString() {
-        return "Data[temp=" + temp + ", hum=" + hum + ", t=" + t + "]";
+        return "Data[id=" + id + ", temp=" + temp + ", hum=" + hum + ", t=" + t + "]";
     }
 
 }

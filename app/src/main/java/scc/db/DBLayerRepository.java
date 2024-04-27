@@ -1,9 +1,11 @@
 package main.java.scc.db;
 
 
-
 public interface DBLayerRepository {
 
-    UserRepository getUsersRepository();
+
+    BoardRepository getBoardsRepository();
+
+    DataRepository getDataRepository();
 
 }

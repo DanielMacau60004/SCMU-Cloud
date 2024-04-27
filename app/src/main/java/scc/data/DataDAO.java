@@ -7,19 +7,24 @@ public class DataDAO {
     private String _rid;
     private String _ts;
 
+    private String id;
     private final float temp;
     private final float hum;
     private final long t;
 
     public DataDAO(Data d) {
-        this(d.getTemp(), d.getHum(), d.getT());
+        this(d.getId(), d.getTemp(), d.getHum(), d.getT());
     }
 
-    public DataDAO(float temp, float hum, long t) {
+    public DataDAO(String id, float temp, float hum, long t) {
         super();
         this.temp = temp;
         this.hum = hum;
         this.t = t;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String get_rid() {
@@ -51,12 +56,12 @@ public class DataDAO {
     }
 
     public Data toData() {
-        return new Data(temp, hum, t);
+        return new Data(id, temp, hum, t);
     }
 
     @Override
     public String toString() {
-        return "DataDAO[_rid=" + _rid + ", _ts=" + _ts + ", temp=" +
+        return "DataDAO[_rid=" + _rid + ", id=" + id + ", _ts=" + _ts + ", temp=" +
                 temp + ", hum=" + hum + ", t=" + t + "]";
     }
 

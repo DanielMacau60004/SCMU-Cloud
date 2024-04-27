@@ -2,21 +2,21 @@ package main.java.scc.srv;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import main.java.scc.data.User;
-import main.java.scc.services.UserService;
+import main.java.scc.data.Board;
+import main.java.scc.services.BoardService;
 
 import java.util.List;
 
-@Path("/users")
-public class UserResource {
+@Path("/boards")
+public class BoardResource {
 
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User create(User user) {
+    public Board register(Board board) {
         try {
-            return UserService.create(user);
+            return BoardService.register(board);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -26,9 +26,9 @@ public class UserResource {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User update(@PathParam("id") String id, User user) {
+    public Board update(@PathParam("id") String id, Board board) {
         try {
-            return UserService.update(id, user);
+            return BoardService.update(id, board);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -37,9 +37,9 @@ public class UserResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public User get(@PathParam("id") String id) {
+    public Board get(@PathParam("id") String id) {
         try {
-            return UserService.get(id);
+            return BoardService.get(id);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -50,7 +50,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Object delete(@PathParam("id") String id) {
         try {
-            return UserService.delete(id);
+            return BoardService.delete(id);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -59,9 +59,9 @@ public class UserResource {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> list() {
+    public List<Board> list() {
         try {
-            return UserService.list();
+            return BoardService.list();
         } catch (Exception e) {
             throw new ServiceUnavailableException();
         }
