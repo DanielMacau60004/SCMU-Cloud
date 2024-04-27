@@ -1,10 +1,10 @@
-package main.java.scc.db.comosdb;
+package main.java.scmu.db.comosdb;
 
 import com.azure.cosmos.CosmosClient;
 import com.azure.cosmos.models.CosmosQueryRequestOptions;
 import com.azure.cosmos.models.PartitionKey;
-import main.java.scc.data.DataDAO;
-import main.java.scc.db.DataRepository;
+import main.java.scmu.data.DataDAO;
+import main.java.scmu.db.DataRepository;
 
 import java.util.List;
 

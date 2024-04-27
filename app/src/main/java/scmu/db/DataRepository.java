@@ -1,6 +1,6 @@
-package main.java.scc.db;
+package main.java.scmu.db;
 
-import main.java.scc.data.DataDAO;
+import main.java.scmu.data.DataDAO;
 
 import java.util.List;
 

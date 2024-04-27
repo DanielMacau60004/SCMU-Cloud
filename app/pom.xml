@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>pt.unl.fct.di.scmu</groupId>
         <artifactId>scmu-cloud</artifactId>
         <version>1.0</version>
+
     </parent>
 
+    <packaging>war</packaging>
     <artifactId>app</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <authors>60004-60814-61045</authors>
+        <authors>60004-61045</authors>
 
-        <!--<appServiceAppRegion>brazilsouth</appServiceAppRegion>-->
         <appServiceAppRegion>westeurope</appServiceAppRegion>
-        <appServiceAppName>scc24app-${appServiceAppRegion}-djv</appServiceAppName>
+        <appServiceAppName>scmu</appServiceAppName>
         <appServicePricingTier>B1</appServicePricingTier>
-        <appServiceResourceGroup>scc24-rg-${appServiceAppRegion}-djv</appServiceResourceGroup>
+        <appServiceResourceGroup>scmu</appServiceResourceGroup>
 
     </properties>
 
@@ -55,7 +54,11 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version> <!-- Use the latest version available -->
         </dependency>
-
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-messaging-servicebus</artifactId>
+            <version>7.13.3</version>
+        </dependency>
 
     </dependencies>
 
@@ -66,7 +69,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>17</release>
                     <source>17</source>
                     <target>17</target>
                 </configuration>
@@ -84,10 +86,10 @@
                 <version>2.12.0</version>
                 <configuration>
                     <schemaVersion>V2</schemaVersion>
-                    <pricingTier>${appServicePricingTier}</pricingTier>
-                    <region>${appServiceAppRegion}</region>
+                    <pricingTier>F1</pricingTier>
+                    <region>westeurope</region>
                     <runtime>
-                        <os>Windows</os>
+                        <os>Linux</os>
                         <javaVersion>Java 17</javaVersion>
                         <webContainer>Tomcat 10.0</webContainer>
                     </runtime>
@@ -101,35 +103,11 @@
                             </resource>
                         </resources>
                     </deployment>
-                    <resourceGroup>${appServiceResourceGroup}</resourceGroup>
-                    <appName>${appServiceAppName}</appName>
+                    <resourceGroup>scmu</resourceGroup>
+                    <appName>scmu</appName>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <profile>
-            <id>generate-war</id>
-            <build>
-                <finalName>${project.artifactId}</finalName>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-war-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>default-war</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>war</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

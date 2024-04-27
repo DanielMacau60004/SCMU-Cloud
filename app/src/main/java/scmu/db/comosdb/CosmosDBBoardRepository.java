@@ -1,9 +1,9 @@
-package main.java.scc.db.comosdb;
+package main.java.scmu.db.comosdb;
 
 import com.azure.cosmos.CosmosClient;
 import com.azure.cosmos.models.PartitionKey;
-import main.java.scc.data.BoardDAO;
-import main.java.scc.db.BoardRepository;
+import main.java.scmu.data.BoardDAO;
+import main.java.scmu.db.BoardRepository;
 
 public class CosmosDBBoardRepository extends CosmosRepository<BoardDAO> implements BoardRepository {
 

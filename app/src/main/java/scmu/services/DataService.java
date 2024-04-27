@@ -1,9 +1,9 @@
-package main.java.scc.services;
+package main.java.scmu.services;
 
-import main.java.scc.data.Data;
-import main.java.scc.data.DataDAO;
-import main.java.scc.db.DataRepository;
-import main.java.scc.srv.MainApplication;
+import main.java.scmu.data.Data;
+import main.java.scmu.data.DataDAO;
+import main.java.scmu.db.DataRepository;
+import main.java.scmu.srv.MainApplication;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;

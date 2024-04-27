@@ -1,4 +1,4 @@
-package main.java.scc.data;
+package main.java.scmu.data;
 
 import java.util.Collections;
 

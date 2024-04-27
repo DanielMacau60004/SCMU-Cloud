@@ -1,9 +1,9 @@
-package main.java.scc.db.comosdb;
+package main.java.scmu.db.comosdb;
 
 import com.azure.cosmos.ConsistencyLevel;
 import com.azure.cosmos.CosmosClient;
 import com.azure.cosmos.CosmosClientBuilder;
-import main.java.scc.db.*;
+import main.java.scmu.db.*;
 
 public class CosmosDBLayer implements DBLayerRepository {
     //TODO SETUP THE KEYS MANUALLY

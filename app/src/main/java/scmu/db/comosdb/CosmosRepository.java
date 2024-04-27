@@ -1,4 +1,4 @@
-package main.java.scc.db.comosdb;
+package main.java.scmu.db.comosdb;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.azure.cosmos.CosmosContainer;
 import com.azure.cosmos.CosmosDatabase;
 import com.azure.cosmos.models.*;
 
-import main.java.scc.db.Repository;
+import main.java.scmu.db.Repository;
 
 import javax.ws.rs.NotFoundException;
 

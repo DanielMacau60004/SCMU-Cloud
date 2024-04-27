@@ -1,4 +1,4 @@
-package main.java.scc.mgt;
+package main.java.scmu.mgt;
 
 import com.azure.core.credential.TokenCredential;
 import com.azure.core.management.AzureEnvironment;

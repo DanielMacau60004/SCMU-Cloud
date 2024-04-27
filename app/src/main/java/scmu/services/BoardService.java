@@ -1,9 +1,9 @@
-package main.java.scc.services;
+package main.java.scmu.services;
 
-import main.java.scc.data.Board;
-import main.java.scc.data.BoardDAO;
-import main.java.scc.db.BoardRepository;
-import main.java.scc.srv.MainApplication;
+import main.java.scmu.data.Board;
+import main.java.scmu.data.BoardDAO;
+import main.java.scmu.db.BoardRepository;
+import main.java.scmu.srv.MainApplication;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;

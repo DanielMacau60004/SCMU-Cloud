@@ -1,6 +1,6 @@
-package main.java.scc.db;
+package main.java.scmu.db;
 
-import main.java.scc.data.BoardDAO;
+import main.java.scmu.data.BoardDAO;
 
 
 public interface BoardRepository extends Repository<BoardDAO> {

@@ -1,6 +1,4 @@
-package main.java.scc.data;
-
-import java.util.Collections;
+package main.java.scmu.data;
 
 public class DataDAO {
 
@@ -18,6 +16,7 @@ public class DataDAO {
 
     public DataDAO(String id, float temp, float hum, long t) {
         super();
+        this.id = id;
         this.temp = temp;
         this.hum = hum;
         this.t = t;

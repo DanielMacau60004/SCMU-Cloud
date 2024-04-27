@@ -1,4 +1,4 @@
-package main.java.scc.db;
+package main.java.scmu.db;
 
 import java.util.List;
 

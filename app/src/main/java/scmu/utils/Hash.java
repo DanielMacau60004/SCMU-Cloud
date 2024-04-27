@@ -1,4 +1,4 @@
-package main.java.scc.utils;
+package main.java.scmu.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

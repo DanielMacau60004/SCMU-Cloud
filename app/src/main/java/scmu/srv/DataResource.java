@@ -1,9 +1,9 @@
-package main.java.scc.srv;
+package main.java.scmu.srv;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import main.java.scc.data.Data;
-import main.java.scc.services.DataService;
+import main.java.scmu.data.Data;
+import main.java.scmu.services.DataService;
 
 import java.util.List;
 

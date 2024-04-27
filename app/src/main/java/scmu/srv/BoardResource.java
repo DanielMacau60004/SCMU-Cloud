@@ -1,9 +1,9 @@
-package main.java.scc.srv;
+package main.java.scmu.srv;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import main.java.scc.data.Board;
-import main.java.scc.services.BoardService;
+import main.java.scmu.data.Board;
+import main.java.scmu.services.BoardService;
 
 import java.util.List;
 
