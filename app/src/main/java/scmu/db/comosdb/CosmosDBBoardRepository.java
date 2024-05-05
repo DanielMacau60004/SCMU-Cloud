@@ -8,7 +8,7 @@ import main.java.scmu.db.BoardRepository;
 public class CosmosDBBoardRepository extends CosmosRepository<BoardDAO> implements BoardRepository {
 
     public CosmosDBBoardRepository(CosmosClient client, String databaseName) {
-        super(client, databaseName, "board", BoardDAO.class);
+        super(client, databaseName, "boards", BoardDAO.class);
     }
 
     @Override

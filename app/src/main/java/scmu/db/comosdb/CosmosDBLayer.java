@@ -6,10 +6,9 @@ import com.azure.cosmos.CosmosClientBuilder;
 import main.java.scmu.db.*;
 
 public class CosmosDBLayer implements DBLayerRepository {
-    //TODO SETUP THE KEYS MANUALLY
-    private static final String CONNECTION_URL = "URL";
-    private static final String DB_KEY = "KEY";
-    private static final String DB_NAME = "NAME";
+    private static final String CONNECTION_URL = "https://scmu-db.documents.azure.com:443/";
+    private static final String DB_KEY = "S1f35gjDDIWJiAmeVn0AjOe3Wnnrw2BVnEe50U6EcXitZgQJMjCjrjHCfDRXwuge6iCdgR8co3RMACDbAgpk2g==";
+    private static final String DB_NAME = "scmu";
 
 
     private static CosmosDBLayer instance;
@@ -35,10 +34,14 @@ public class CosmosDBLayer implements DBLayerRepository {
 
     private final CosmosDBBoardRepository boards;
     private final CosmosDBDataRepository data;
+    private final CosmosDBStatusRepository status;
+    private final CosmosDBUserRepository users;
 
     public CosmosDBLayer(CosmosClient client) {
         boards = new CosmosDBBoardRepository(client, DB_NAME);
         data = new CosmosDBDataRepository(client, DB_NAME);
+        status = new CosmosDBStatusRepository(client, DB_NAME);
+        users = new CosmosDBUserRepository(client, DB_NAME);
     }
 
     public BoardRepository getBoardsRepository() {
@@ -49,8 +52,18 @@ public class CosmosDBLayer implements DBLayerRepository {
         return data;
     }
 
+    public StatusRepository getStatusRepository() {
+        return status;
+    }
+
+    public UserRepository getUserRepository() {
+        return users;
+    }
+
     public void close() {
         boards.close();
         data.close();
+        status.close();
+        users.close();
     }
 }

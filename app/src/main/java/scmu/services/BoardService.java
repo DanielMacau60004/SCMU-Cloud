@@ -18,10 +18,15 @@ public class BoardService {
         BoardDAO boardDAO = new BoardDAO(board);
 
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
-        return boardDB.create(boardDAO).toBoard();
+        board = boardDB.create(boardDAO).toBoard();
+
+        DataService.addBulk(boardDAO, board.getData());
+        StatusService.addBulk(boardDAO, board.getStatus());
+
+        return board;
     }
 
-    public static Board update(String id, Board board) {
+    public static Board updateUser(String id, Board board) {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         BoardDAO boardDAO = boardDB.get(id);
 
@@ -30,12 +35,23 @@ public class BoardService {
             boardDAO.setRotation(board.getRotation());
 
         boardDAO.setActive(board.isActive());
-        boardDAO.setHourToStart(board.getHourToStart());
         boardDAO.setDuration(board.getDuration());
+        boardDAO.setHourToStart(board.getHourToStart());
 
-
+        DataService.addBulk(boardDAO, board.getData());
+        StatusService.addBulk(boardDAO, board.getStatus());
         return boardDB.put(boardDAO).toBoard();
     }
+
+    public static Board updateArduino(String id, Board board) {
+        BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
+        BoardDAO boardDAO = boardDB.get(id);
+
+        DataService.addBulk(boardDAO, board.getData());
+        StatusService.addBulk(boardDAO, board.getStatus());
+        return boardDB.put(boardDAO).toBoard();
+    }
+
 
     public static Board get(String id) {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();

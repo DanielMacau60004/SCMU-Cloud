@@ -1,0 +1,33 @@
+package main.java.scmu.data;
+
+import java.util.List;
+
+public class User {
+
+    private String id;
+
+    private List<String> boards;
+
+    public User() {
+    }
+
+    public User(String id, List<String> boards) {
+        super();
+        this.id = id;
+        this.boards = boards;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<String> getBoards() {
+        return boards;
+    }
+
+    @Override
+    public String toString() {
+        return "User[id=" + id + ", boards=" + boards + "]";
+    }
+
+}

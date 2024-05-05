@@ -1,6 +1,10 @@
 package main.java.scmu.data;
 
+import jakarta.annotation.Nullable;
+
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Board {
 
@@ -9,6 +13,12 @@ public class Board {
     private long duration;
     private long hourToStart;
     private boolean[] rotation;
+
+    @Nullable
+    private List<Data> data;
+
+    @Nullable
+    private List<Status> status;
 
     public Board() {
     }
@@ -21,6 +31,9 @@ public class Board {
         this.duration = duration;
         this.hourToStart = hourToStart;
         this.rotation = rotation;
+
+        this.data = new ArrayList<>();
+        this.status = new ArrayList<>();
 
     }
 
@@ -60,11 +73,20 @@ public class Board {
         return rotation;
     }
 
+    @Nullable
+    public List<Data> getData() {
+        return data;
+    }
+
+    @Nullable
+    public List<Status> getStatus() {
+        return status;
+    }
 
     @Override
     public String toString() {
-        return "BoardConfig[id=" + id + ", active=" + active + ", duration=" + duration + ", hourToStart=" + hourToStart +
-                ", rotation=" + Collections.singletonList(rotation) + "]";
+        return "Board[id=" + id + ", active=" + active + ", duration=" + duration + ", hourToStart=" + hourToStart +
+                ", rotation=" + Collections.singletonList(rotation) + ", data=" + data + "+ , status=" + status + "]";
     }
 
 }

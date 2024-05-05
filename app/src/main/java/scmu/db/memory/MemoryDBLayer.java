@@ -1,8 +1,6 @@
 package main.java.scmu.db.memory;
 
-import main.java.scmu.db.BoardRepository;
-import main.java.scmu.db.DBLayerRepository;
-import main.java.scmu.db.DataRepository;
+import main.java.scmu.db.*;
 
 public class MemoryDBLayer implements DBLayerRepository {
 
@@ -20,10 +18,14 @@ public class MemoryDBLayer implements DBLayerRepository {
 
     private final MemoryDBBoardRepository boards;
     private final MemoryDBDataRepository data;
+    private final MemoryDBStatusRepository status;
+    private final MemoryDBUserRepository users;
 
     public MemoryDBLayer() {
         boards = new MemoryDBBoardRepository();
         data = new MemoryDBDataRepository();
+        status = new MemoryDBStatusRepository();
+        users = new MemoryDBUserRepository();
     }
 
 
@@ -35,5 +37,15 @@ public class MemoryDBLayer implements DBLayerRepository {
     @Override
     public DataRepository getDataRepository() {
         return data;
+    }
+
+    @Override
+    public StatusRepository getStatusRepository() {
+        return status;
+    }
+
+    @Override
+    public UserRepository getUserRepository() {
+        return users;
     }
 }

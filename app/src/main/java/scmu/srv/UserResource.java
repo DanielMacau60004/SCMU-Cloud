@@ -3,44 +3,34 @@ package main.java.scmu.srv;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import main.java.scmu.data.Board;
+import main.java.scmu.data.User;
 import main.java.scmu.services.BoardService;
+import main.java.scmu.services.UserService;
 
 import java.util.List;
 
-@Path("/boards")
-public class BoardResource {
+@Path("/users")
+public class UserResource {
 
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Board register(Board board) {
+    public User register(User user) {
         try {
-            return BoardService.register(board);
+            return UserService.register(user);
         } catch (Exception e) {
             throw new NotFoundException();
         }
     }
 
     @PUT
-    @Path("/{id}/arduino")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Board updateArduino(@PathParam("id") String id, Board board) {
+    public User update(@PathParam("id") String id, User user) {
         try {
-            return BoardService.updateArduino(id, board);
-        } catch (Exception e) {
-            throw new NotFoundException();
-        }
-    }
-
-    @PUT
-    @Path("/{id}/user")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Board updateUser(@PathParam("id") String id, Board board) {
-        try {
-            return BoardService.updateUser(id, board);
+            return UserService.update(id, user);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -49,9 +39,9 @@ public class BoardResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Board get(@PathParam("id") String id) {
+    public User get(@PathParam("id") String id) {
         try {
-            return BoardService.get(id);
+            return UserService.get(id);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -62,7 +52,7 @@ public class BoardResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Object delete(@PathParam("id") String id) {
         try {
-            return BoardService.delete(id);
+            return UserService.delete(id);
         } catch (Exception e) {
             throw new NotFoundException();
         }
@@ -71,9 +61,9 @@ public class BoardResource {
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Board> list() {
+    public List<User> list() {
         try {
-            return BoardService.list();
+            return UserService.list();
         } catch (Exception e) {
             throw new ServiceUnavailableException();
         }

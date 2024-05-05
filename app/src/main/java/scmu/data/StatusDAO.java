@@ -1,26 +1,24 @@
 package main.java.scmu.data;
 
-public class DataDAO {
+public class StatusDAO {
 
     private String _rid;
     private String _ts;
 
     private String id;
     private String board;
-    private final float temp;
-    private final float hum;
+    private final int status;
     private final long t;
 
-    public DataDAO(BoardDAO board, Data d) {
-        this(board.getId()+d.getT(), board.getId(), d.getTemp(), d.getHum(), d.getT());
+    public StatusDAO(BoardDAO board, Status s) {
+        this(board.getId()+s.getT(), board.getId(), s.getStatus(), s.getT());
     }
 
-    public DataDAO(String id, String board, float temp, float hum, long t) {
+    public StatusDAO(String id, String board, int status, long t) {
         super();
         this.id = id;
         this.board = board;
-        this.temp = temp;
-        this.hum = hum;
+        this.status = status;
         this.t = t;
     }
 
@@ -48,26 +46,22 @@ public class DataDAO {
         return board;
     }
 
-    public float getTemp() {
-        return temp;
-    }
-
-    public float getHum() {
-        return hum;
+    public int getStatus() {
+        return status;
     }
 
     public long getT() {
         return t;
     }
 
-    public Data toData() {
-        return new Data(temp, hum, t);
+    public Status toStatus() {
+        return new Status(status, t);
     }
 
     @Override
     public String toString() {
-        return "DataDAO[_rid=" + _rid + ", id=" + id + ", board=" + board + ", _ts=" + _ts + ", temp=" +
-                temp + ", hum=" + hum + ", t=" + t + "]";
+        return "DataDAO[_rid=" + _rid + ", id=" + id + ", board=" + board + ", _ts=" + _ts + ", status=" +
+                status + ", t=" + t + "]";
     }
 
 }

@@ -8,4 +8,8 @@ public interface DBLayerRepository {
 
     DataRepository getDataRepository();
 
+    StatusRepository getStatusRepository();
+
+    UserRepository getUserRepository();
+
 }

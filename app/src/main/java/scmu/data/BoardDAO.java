@@ -96,7 +96,7 @@ public class BoardDAO {
 
     @Override
     public String toString() {
-        return "BoardConfigDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
+        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
                 ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + "]";
     }

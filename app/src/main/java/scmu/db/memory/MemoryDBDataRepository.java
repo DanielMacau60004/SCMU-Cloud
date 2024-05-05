@@ -14,6 +14,11 @@ public class MemoryDBDataRepository extends MemoryRepository<DataDAO> implements
     }
 
     @Override
+    public void addBulk(List<DataDAO> data) {
+        data.forEach(d -> storage.put(getId(d), d));
+    }
+
+    @Override
     public List<DataDAO> listByIntervalLocation(String id, long start, long end) {
         return storage.values().stream().filter(d -> d.getId().equals(id) && d.getT() >= start && d.getT() <= end)
                 .collect(Collectors.toList());

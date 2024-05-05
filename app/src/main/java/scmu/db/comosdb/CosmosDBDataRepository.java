@@ -1,16 +1,16 @@
 package main.java.scmu.db.comosdb;
 
 import com.azure.cosmos.CosmosClient;
-import com.azure.cosmos.models.CosmosQueryRequestOptions;
-import com.azure.cosmos.models.PartitionKey;
+import com.azure.cosmos.models.*;
 import main.java.scmu.data.DataDAO;
 import main.java.scmu.db.DataRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CosmosDBDataRepository extends CosmosRepository<DataDAO> implements DataRepository {
 
-    private static final String LIST_QUERY = "SELECT * FROM data WHERE data.id =\"%s\" and data.t >= %d and data.t <= %d";
+    private static final String LIST_QUERY = "SELECT * FROM data WHERE data.board =\"%s\" and data.t >= %d and data.t <= %d";
 
     public CosmosDBDataRepository(CosmosClient client, String databaseName) {
         super(client, databaseName, "data", DataDAO.class);
@@ -24,6 +24,14 @@ public class CosmosDBDataRepository extends CosmosRepository<DataDAO> implements
     @Override
     public PartitionKey getPartitionKey(DataDAO entity) {
         return new PartitionKey(entity.getId());
+    }
+
+    @Override
+    public void addBulk(List<DataDAO> data) {
+        init();
+        List<CosmosItemOperation> bulkOperations = new ArrayList<>();
+        data.forEach(d-> bulkOperations.add(CosmosBulkOperations.getCreateItemOperation(d, getPartitionKey(d))));
+        container.executeBulkOperations(bulkOperations, new CosmosBulkExecutionOptions());
     }
 
     @Override
