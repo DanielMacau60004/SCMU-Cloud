@@ -39,7 +39,6 @@ public class CosmosDBStatusRepository extends CosmosRepository<StatusDAO> implem
     @Override
     public List<StatusDAO> listByIntervalLocation(String id, long start, long end) {
         init();
-
         return container.queryItems(
                 LIST_QUERY.formatted(id, start, end),
                 new CosmosQueryRequestOptions(), StatusDAO.class).stream().toList();

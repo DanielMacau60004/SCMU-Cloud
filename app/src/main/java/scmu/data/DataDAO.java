@@ -7,9 +7,11 @@ public class DataDAO {
 
     private String id;
     private String board;
-    private final float temp;
-    private final float hum;
-    private final long t;
+    private float temp;
+    private float hum;
+    private long t;
+
+    public DataDAO(){}
 
     public DataDAO(BoardDAO board, Data d) {
         this(board.getId()+d.getT(), board.getId(), d.getTemp(), d.getHum(), d.getT());

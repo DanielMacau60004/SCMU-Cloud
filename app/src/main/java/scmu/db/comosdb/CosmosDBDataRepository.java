@@ -37,7 +37,6 @@ public class CosmosDBDataRepository extends CosmosRepository<DataDAO> implements
     @Override
     public List<DataDAO> listByIntervalLocation(String id, long start, long end) {
         init();
-
         return container.queryItems(
                 LIST_QUERY.formatted(id, start, end),
                 new CosmosQueryRequestOptions(), DataDAO.class).stream().toList();

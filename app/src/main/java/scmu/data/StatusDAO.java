@@ -7,8 +7,10 @@ public class StatusDAO {
 
     private String id;
     private String board;
-    private final int status;
-    private final long t;
+    private int status;
+    private long t;
+
+    public StatusDAO() {}
 
     public StatusDAO(BoardDAO board, Status s) {
         this(board.getId()+s.getT(), board.getId(), s.getStatus(), s.getT());
