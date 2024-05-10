@@ -13,6 +13,7 @@ public class Board {
     private long duration;
     private long hourToStart;
     private boolean[] rotation;
+    private int state;
 
     @Nullable
     private List<Data> data;
@@ -24,13 +25,14 @@ public class Board {
     }
 
     public Board(String id, boolean active, long duration,
-                 long hourToStart, boolean[] rotation) {
+                 long hourToStart, boolean[] rotation, int state) {
         super();
         this.id = id;
         this.active = active;
         this.duration = duration;
         this.hourToStart = hourToStart;
         this.rotation = rotation;
+        this.state = state;
 
         this.data = new ArrayList<>();
         this.status = new ArrayList<>();
@@ -73,6 +75,14 @@ public class Board {
         return rotation;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Nullable
     public List<Data> getData() {
         return data;
@@ -86,7 +96,8 @@ public class Board {
     @Override
     public String toString() {
         return "Board[id=" + id + ", active=" + active + ", duration=" + duration + ", hourToStart=" + hourToStart +
-                ", rotation=" + Collections.singletonList(rotation) + ", data=" + data + "+ , status=" + status + "]";
+                ", rotation=" + Collections.singletonList(rotation) + ", state=" + state + ", data=" +
+                data + "+ , status=" + status + "]";
     }
 
 }

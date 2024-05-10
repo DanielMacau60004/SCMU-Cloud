@@ -12,6 +12,7 @@ public class BoardDAO {
     private long duration;
     private long hourToStart;
     private boolean[] rotation;
+    private int state;
 
     public BoardDAO() {
 
@@ -19,17 +20,18 @@ public class BoardDAO {
 
     public BoardDAO(Board b) {
         this(b.getId(), b.isActive()
-                , b.getDuration(), b.getHourToStart(), b.getRotation());
+                , b.getDuration(), b.getHourToStart(), b.getRotation(), b.getState());
     }
 
     public BoardDAO(String id, boolean active, long duration,
-                    long hourToStart, boolean[] rotation) {
+                    long hourToStart, boolean[] rotation, int state) {
         super();
         this.id = id;
         this.active = active;
         this.duration = duration;
         this.hourToStart = hourToStart;
         this.rotation = rotation;
+        this.state = state;
 
     }
 
@@ -89,16 +91,24 @@ public class BoardDAO {
         return rotation;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public Board toBoard() {
         return new Board(id, active, duration,
-                hourToStart, rotation);
+                hourToStart, rotation, state);
     }
 
     @Override
     public String toString() {
         return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
                 ", duration=" + duration + ", hourToStart=" + hourToStart +
-                ", rotation=" + Collections.singletonList(rotation) + "]";
+                ", rotation=" + Collections.singletonList(rotation) + ", state=" + state + "]";
     }
 
 }

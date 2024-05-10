@@ -18,6 +18,12 @@ public class StatusService {
         statusDB.addBulk(status.stream().map(s -> new StatusDAO(board, s)).collect(Collectors.toList()));
     }
 
+    public static void removeAllByID(String boardId) {
+        StatusRepository statusDB = MainApplication.DB_LAYER.getStatusRepository();
+        List<StatusDAO> list = statusDB.listByIntervalLocation(boardId, 0, Integer.MAX_VALUE).stream().toList();
+        statusDB.removeBulk(list);
+    }
+
     public static List<Status> list(String id, long start, long end) {
         StatusRepository statusDB = MainApplication.DB_LAYER.getStatusRepository();
         return statusDB.listByIntervalLocation(id, start, end).stream().map(StatusDAO::toStatus).toList();

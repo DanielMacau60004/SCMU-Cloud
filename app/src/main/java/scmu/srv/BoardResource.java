@@ -3,7 +3,10 @@ package main.java.scmu.srv;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import main.java.scmu.data.Board;
+import main.java.scmu.data.BoardInfo;
+import main.java.scmu.data.Data;
 import main.java.scmu.services.BoardService;
+import main.java.scmu.services.DataService;
 
 import java.util.List;
 
@@ -63,6 +66,30 @@ public class BoardResource {
     public Object delete(@PathParam("id") String id) {
         try {
             return BoardService.delete(id);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}/reset")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Board reset(@PathParam("id") String id) {
+        try {
+            return BoardService.reset(id);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
+
+    @GET
+    @Path("/{id}/info")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public BoardInfo update(@PathParam("id") String id, @QueryParam("start") long start,
+                            @QueryParam("end") long end) {
+        try {
+            return BoardService.boardInfo(id, start, end);
         } catch (Exception e) {
             throw new NotFoundException();
         }

@@ -21,6 +21,12 @@ public class DataService {
         dataDB.addBulk(data.stream().map(d -> new DataDAO(board, d)).collect(Collectors.toList()));
     }
 
+    public static void removeAllByID(String boardId) {
+        DataRepository dataDB = MainApplication.DB_LAYER.getDataRepository();
+        List<DataDAO> list = dataDB.listByIntervalLocation(boardId, 0, Integer.MAX_VALUE).stream().toList();
+        dataDB.removeBulk(list);
+    }
+
     public static List<Data> list(String id, long start, long end) {
         DataRepository dataDB = MainApplication.DB_LAYER.getDataRepository();
         return dataDB.listByIntervalLocation(id, start, end).stream().map(DataDAO::toData).toList();

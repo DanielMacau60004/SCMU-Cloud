@@ -1,7 +1,6 @@
 package main.java.scmu.services;
 
-import main.java.scmu.data.Board;
-import main.java.scmu.data.BoardDAO;
+import main.java.scmu.data.*;
 import main.java.scmu.db.BoardRepository;
 import main.java.scmu.srv.MainApplication;
 
@@ -37,6 +36,7 @@ public class BoardService {
         boardDAO.setActive(board.isActive());
         boardDAO.setDuration(board.getDuration());
         boardDAO.setHourToStart(board.getHourToStart());
+        boardDAO.setState(board.getState());
 
         DataService.addBulk(boardDAO, board.getData());
         StatusService.addBulk(boardDAO, board.getStatus());
@@ -47,9 +47,15 @@ public class BoardService {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         BoardDAO boardDAO = boardDB.get(id);
 
+        int oldState = boardDAO.getState();
+
+        boardDAO.setState(board.getState());
         DataService.addBulk(boardDAO, board.getData());
         StatusService.addBulk(boardDAO, board.getStatus());
-        return boardDB.put(boardDAO).toBoard();
+
+        board = boardDB.put(boardDAO).toBoard();
+        board.setState(oldState);
+        return board;
     }
 
 
@@ -62,7 +68,30 @@ public class BoardService {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         BoardDAO boardDAO = boardDB.get(id);
 
+        DataService.removeAllByID(id);
+        StatusService.removeAllByID(id);
+
         return boardDB.delete(boardDAO);
+    }
+
+    public static Board reset(String id) {
+        BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
+        BoardDAO boardDAO = boardDB.get(id);
+
+        DataService.removeAllByID(id);
+        StatusService.removeAllByID(id);
+
+        return boardDAO.toBoard();
+    }
+
+    public static BoardInfo boardInfo(String id, long start, long end) {
+        BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
+        BoardDAO boardDAO = boardDB.get(id);
+
+        List<Data> data = DataService.list(id, start, end);
+        List<Status> status = StatusService.list(id, start, end);
+
+        return new BoardInfo(boardDAO.toBoard(), data, status, start, end);
     }
 
     public static List<Board> list() {

@@ -10,7 +10,7 @@ public class Status {
 
     public Status(int status, long t) {
         super();
-
+        this.status = status;
         this.t = t;
     }
 

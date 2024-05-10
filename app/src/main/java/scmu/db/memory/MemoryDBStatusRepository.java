@@ -21,6 +21,11 @@ public class MemoryDBStatusRepository extends MemoryRepository<StatusDAO> implem
     }
 
     @Override
+    public void removeBulk(List<StatusDAO> data) {
+        data.forEach(d -> storage.remove(getId(d), d));
+    }
+
+    @Override
     public List<StatusDAO> listByIntervalLocation(String id, long start, long end) {
         return storage.values().stream().filter(s -> s.getId().equals(id) && s.getT() >= start && s.getT() <= end)
                 .collect(Collectors.toList());

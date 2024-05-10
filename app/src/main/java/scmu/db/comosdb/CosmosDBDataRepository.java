@@ -35,6 +35,14 @@ public class CosmosDBDataRepository extends CosmosRepository<DataDAO> implements
     }
 
     @Override
+    public void removeBulk(List<DataDAO> data) {
+        init();
+        List<CosmosItemOperation> bulkOperations = new ArrayList<>();
+        data.forEach(d-> bulkOperations.add(CosmosBulkOperations.getDeleteItemOperation(getId(d), getPartitionKey(d))));
+        container.executeBulkOperations(bulkOperations, new CosmosBulkExecutionOptions());
+    }
+
+    @Override
     public List<DataDAO> listByIntervalLocation(String id, long start, long end) {
         init();
         return container.queryItems(
