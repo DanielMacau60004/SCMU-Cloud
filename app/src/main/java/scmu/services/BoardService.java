@@ -50,6 +50,8 @@ public class BoardService {
         int oldState = boardDAO.getState();
 
         boardDAO.setState(board.getState());
+        boardDAO.setCurrentState(board.getCurrentState());
+        boardDAO.setLastUpdate(board.getLastUpdate());
         DataService.addBulk(boardDAO, board.getData());
         StatusService.addBulk(boardDAO, board.getStatus());
 

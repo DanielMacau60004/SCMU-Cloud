@@ -14,17 +14,21 @@ public class BoardDAO {
     private boolean[] rotation;
     private int state;
 
+    private int currentState;
+    private long lastUpdate;
+
     public BoardDAO() {
 
     }
 
     public BoardDAO(Board b) {
         this(b.getId(), b.isActive()
-                , b.getDuration(), b.getHourToStart(), b.getRotation(), b.getState());
+                , b.getDuration(), b.getHourToStart(), b.getRotation(), b.getState(),
+                b.getCurrentState(), b.getLastUpdate());
     }
 
     public BoardDAO(String id, boolean active, long duration,
-                    long hourToStart, boolean[] rotation, int state) {
+                    long hourToStart, boolean[] rotation, int state, int currentState, long lastUpdate) {
         super();
         this.id = id;
         this.active = active;
@@ -32,6 +36,8 @@ public class BoardDAO {
         this.hourToStart = hourToStart;
         this.rotation = rotation;
         this.state = state;
+        this.currentState = currentState;
+        this.lastUpdate = lastUpdate;
 
     }
 
@@ -99,16 +105,33 @@ public class BoardDAO {
         this.state = state;
     }
 
+    public int getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(int currentState) {
+        this.currentState = currentState;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
     public Board toBoard() {
         return new Board(id, active, duration,
-                hourToStart, rotation, state);
+                hourToStart, rotation, state, currentState, lastUpdate);
     }
 
     @Override
     public String toString() {
         return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
                 ", duration=" + duration + ", hourToStart=" + hourToStart +
-                ", rotation=" + Collections.singletonList(rotation) + ", state=" + state + "]";
+                ", rotation=" + Collections.singletonList(rotation) + ", state=" + state
+                + " , currentState=" + currentState + " , lastUpdate=" + lastUpdate + "]";
     }
 
 }

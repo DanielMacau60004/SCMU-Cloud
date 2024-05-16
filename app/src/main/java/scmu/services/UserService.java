@@ -11,15 +11,21 @@ import java.util.List;
 
 public class UserService {
 
-    public static User register(User user) {
+    public static User getOrCreate(User user) {
         //Check for nulls
         if (user.getId() == null)
             throw new NotFoundException();
 
         UserDAO userDAO = new UserDAO(user);
-
         UserRepository userDB = MainApplication.DB_LAYER.getUserRepository();
-        return userDB.create(userDAO).toUser();
+
+        try {
+            userDAO = userDB.get(user.getId());
+        } catch (Exception e) {
+            userDAO = userDB.create(userDAO);
+        }
+
+        return userDAO.toUser();
     }
 
     public static User update(String id, User user) {

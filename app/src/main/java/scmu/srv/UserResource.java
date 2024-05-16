@@ -16,9 +16,9 @@ public class UserResource {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public User register(User user) {
+    public User getOrCreate(User user) {
         try {
-            return UserService.register(user);
+            return UserService.getOrCreate(user);
         } catch (Exception e) {
             throw new NotFoundException();
         }
