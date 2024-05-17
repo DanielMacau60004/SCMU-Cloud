@@ -9,7 +9,7 @@ public class UserDAO {
 
     private String id;
 
-    private List<String> boards;
+    private List<UserBoard> boards;
 
     public UserDAO() {
     }
@@ -18,7 +18,7 @@ public class UserDAO {
         this(user.getId(), user.getBoards());
     }
 
-    public UserDAO(String id, List<String> boards) {
+    public UserDAO(String id, List<UserBoard> boards) {
         super();
         this.id = id;
         this.boards = boards;
@@ -51,11 +51,11 @@ public class UserDAO {
         return new User(id, boards);
     }
 
-    public List<String> getBoards() {
+    public List<UserBoard> getBoards() {
         return boards;
     }
 
-    public void setBoards(List<String> boards) {
+    public void setBoards(List<UserBoard> boards) {
         this.boards = boards;
     }
 

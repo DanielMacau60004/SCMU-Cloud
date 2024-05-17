@@ -60,6 +60,17 @@ public class BoardResource {
         }
     }
 
+    @GET
+    @Path("/{id}/pwd")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Board getPassword(@PathParam("id") String id, @QueryParam("pwd") String pwd) {
+        try {
+            return BoardService.get(id, pwd);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
+
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -71,7 +82,7 @@ public class BoardResource {
         }
     }
 
-    @DELETE
+    @GET
     @Path("/{id}/reset")
     @Produces(MediaType.APPLICATION_JSON)
     public Board reset(@PathParam("id") String id) {

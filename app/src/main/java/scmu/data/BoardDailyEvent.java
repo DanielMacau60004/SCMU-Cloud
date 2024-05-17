@@ -1,11 +1,20 @@
 package main.java.scmu.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class BoardDailyEvent {
+
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
+    enum EBoardDailyEventState {
+        CANCELED_USER,
+        CANCELED_SYSTEM,
+        NOT_SCHEDULED,
+        SCHEDULED
+    }
 
     @JsonProperty("start")
     private long start;
@@ -24,23 +33,18 @@ public class BoardDailyEvent {
     @JsonProperty("avgHum")
     private float avgHum;
 
+    @JsonProperty("eventState")
+    private EBoardDailyEventState eventState;
+
     @JsonProperty("timeLine")
     private List<BoardTimeLine> timeLine;
-
-    //@JsonProperty("data")
-    private List<Data> data;
-
-    //@JsonProperty("status")
-    private List<Status> status;
 
     public BoardDailyEvent() {
     }
 
     public BoardDailyEvent(List<Data> data, List<Status> status) {
-        this.data = data;
-        this.status = status;
-
         timeLine = new LinkedList<>();
+        eventState = EBoardDailyEventState.NOT_SCHEDULED;
 
         calculateData(data);
         calculateStatus(status);
@@ -66,10 +70,19 @@ public class BoardDailyEvent {
 
         Status prvStatus = null;
         for (Status s : status) {
-
-            if (s.getStatus() == 0) {//Running
+            if (s.getStatus() == 0) //Running
                 if (start == 0) start = s.getT();
-                end = s.getT();
+
+            if(s.getStatus() == 3) {
+                start = s.getT();
+                eventState = EBoardDailyEventState.CANCELED_USER;
+                break;
+            }
+
+            if(s.getStatus() == 4) {
+                start = s.getT();
+                eventState = EBoardDailyEventState.CANCELED_SYSTEM;
+                break;
             }
 
             if (prvStatus != null) {
@@ -78,19 +91,17 @@ public class BoardDailyEvent {
                 if (prvStatus.getStatus() == 0) {
                     executionTime += duration;
                     timeLine.add(new BoardTimeLine(prvStatus.getT(), s.getT(), prvStatus.getStatus()));
+                    eventState = EBoardDailyEventState.SCHEDULED;
                 } else if (prvStatus.getStatus() == 1) {
                     pausedTime += duration;
                     timeLine.add(new BoardTimeLine(prvStatus.getT(), s.getT(), prvStatus.getStatus()));
+                    eventState = EBoardDailyEventState.SCHEDULED;
                 }
             }
 
+            end = s.getT();
             prvStatus = s;
         }
-    }
-
-    @JsonProperty("asEvent")
-    public boolean asEvent() {
-        return !timeLine.isEmpty();
     }
 
 }

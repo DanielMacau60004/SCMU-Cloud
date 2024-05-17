@@ -6,12 +6,12 @@ public class User {
 
     private String id;
 
-    private List<String> boards;
+    private List<UserBoard> boards;
 
     public User() {
     }
 
-    public User(String id, List<String> boards) {
+    public User(String id, List<UserBoard> boards) {
         super();
         this.id = id;
         this.boards = boards;
@@ -21,7 +21,7 @@ public class User {
         return id;
     }
 
-    public List<String> getBoards() {
+    public List<UserBoard> getBoards() {
         return boards;
     }
 

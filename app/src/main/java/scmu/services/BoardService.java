@@ -3,6 +3,7 @@ package main.java.scmu.services;
 import main.java.scmu.data.*;
 import main.java.scmu.db.BoardRepository;
 import main.java.scmu.srv.MainApplication;
+import main.java.scmu.utils.Hash;
 
 import javax.ws.rs.NotFoundException;
 import java.util.List;
@@ -11,10 +12,12 @@ public class BoardService {
 
     public static Board register(Board board) {
         //Check for nulls
-        if (board.getId() == null || board.getRotation() == null)
+        if (board.getId() == null || board.getPwd() == null || board.getRotation() == null)
             throw new NotFoundException();
 
         BoardDAO boardDAO = new BoardDAO(board);
+        String hashedPwd = Hash.of(board.getPwd());
+        boardDAO.setPwd(hashedPwd);
 
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         board = boardDB.create(boardDAO).toBoard();
@@ -64,6 +67,17 @@ public class BoardService {
     public static Board get(String id) {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         return boardDB.get(id).toBoard();
+    }
+
+    public static Board get(String id, String pwd) {
+        String hashedPwd = Hash.of(pwd);
+        BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
+
+        BoardDAO boardDAO = boardDB.get(id);
+        if(boardDAO.getPwd().equals(hashedPwd))
+            return boardDB.get(id).toBoard();
+
+        throw new NotFoundException();
     }
 
     public static Object delete(String id) {

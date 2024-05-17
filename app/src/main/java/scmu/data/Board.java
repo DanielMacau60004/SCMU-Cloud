@@ -9,6 +9,8 @@ import java.util.List;
 public class Board {
 
     private String id;
+    private String pwd;
+
     private boolean active;
     private long duration;
     private long hourToStart;
@@ -26,11 +28,12 @@ public class Board {
     public Board() {
     }
 
-    public Board(String id, boolean active, long duration,
+    public Board(String id, String pwd, boolean active, long duration,
                  long hourToStart, boolean[] rotation, int state,
                  int currentState, long lastUpdate) {
         super();
         this.id = id;
+        this.pwd = pwd;
         this.active = active;
         this.duration = duration;
         this.hourToStart = hourToStart;
@@ -46,6 +49,14 @@ public class Board {
 
     public String getId() {
         return id;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public String getPwd() {
+        return pwd;
     }
 
     public void setActive(boolean active) {
@@ -116,7 +127,7 @@ public class Board {
 
     @Override
     public String toString() {
-        return "Board[id=" + id + ", active=" + active + ", duration=" + duration + ", hourToStart=" + hourToStart +
+        return "Board[id=" + id + ", pwd=" + pwd + ", active=" + active + ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + ", state=" + state + ", data=" +
                 data + "+ , status=" + status + " , currentState=" + currentState + " , lastUpdate=" + lastUpdate + "]";
     }

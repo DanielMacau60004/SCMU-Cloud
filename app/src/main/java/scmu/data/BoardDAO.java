@@ -8,6 +8,7 @@ public class BoardDAO {
     private String _ts;
 
     private String id;
+    private String pwd;
     private boolean active;
     private long duration;
     private long hourToStart;
@@ -22,15 +23,16 @@ public class BoardDAO {
     }
 
     public BoardDAO(Board b) {
-        this(b.getId(), b.isActive()
+        this(b.getId(), b.getPwd(), b.isActive()
                 , b.getDuration(), b.getHourToStart(), b.getRotation(), b.getState(),
                 b.getCurrentState(), b.getLastUpdate());
     }
 
-    public BoardDAO(String id, boolean active, long duration,
+    public BoardDAO(String id, String pwd, boolean active, long duration,
                     long hourToStart, boolean[] rotation, int state, int currentState, long lastUpdate) {
         super();
         this.id = id;
+        this.pwd = pwd;
         this.active = active;
         this.duration = duration;
         this.hourToStart = hourToStart;
@@ -63,6 +65,14 @@ public class BoardDAO {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public String getId() {
@@ -122,13 +132,13 @@ public class BoardDAO {
     }
 
     public Board toBoard() {
-        return new Board(id, active, duration,
+        return new Board(id, pwd, active, duration,
                 hourToStart, rotation, state, currentState, lastUpdate);
     }
 
     @Override
     public String toString() {
-        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
+        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", pwd=" + pwd +", active=" + active +
                 ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + ", state=" + state
                 + " , currentState=" + currentState + " , lastUpdate=" + lastUpdate + "]";
