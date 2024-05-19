@@ -49,6 +49,18 @@ public class BoardResource {
         }
     }
 
+    @PUT
+    @Path("/{id}/request")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Board request(@PathParam("id") String id, @QueryParam("request") int request) {
+        try {
+            return BoardService.request(id, request);
+        } catch (Exception e) {
+            throw new NotFoundException();
+        }
+    }
+
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -97,10 +109,9 @@ public class BoardResource {
     @Path("/{id}/info")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public BoardInfo update(@PathParam("id") String id, @QueryParam("start") long start,
-                            @QueryParam("end") long end) {
+    public BoardInfo update(@PathParam("id") String id, @QueryParam("days") int days) {
         try {
-            return BoardService.boardInfo(id, start, end);
+            return BoardService.boardInfo(id, days);
         } catch (Exception e) {
             throw new NotFoundException();
         }

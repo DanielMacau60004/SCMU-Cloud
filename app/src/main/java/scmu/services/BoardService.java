@@ -46,6 +46,14 @@ public class BoardService {
         return boardDB.put(boardDAO).toBoard();
     }
 
+    public static Board request(String id, int status) {
+        BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
+        BoardDAO boardDAO = boardDB.get(id);
+
+        boardDAO.setState(status);
+        return boardDB.put(boardDAO).toBoard();
+    }
+
     public static Board updateArduino(String id, Board board) {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         BoardDAO boardDAO = boardDB.get(id);
@@ -54,6 +62,7 @@ public class BoardService {
 
         boardDAO.setState(board.getState());
         boardDAO.setCurrentState(board.getCurrentState());
+        boardDAO.setCurrentDate(board.getCurrentDate());
         boardDAO.setLastUpdate(board.getLastUpdate());
         DataService.addBulk(boardDAO, board.getData());
         StatusService.addBulk(boardDAO, board.getStatus());
@@ -100,14 +109,17 @@ public class BoardService {
         return boardDAO.toBoard();
     }
 
-    public static BoardInfo boardInfo(String id, long start, long end) {
+    public static BoardInfo boardInfo(String id, int days) {
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
         BoardDAO boardDAO = boardDB.get(id);
 
-        List<Data> data = DataService.list(id, start, end);
-        List<Status> status = StatusService.list(id, start, end);
+        long lastDate = boardDAO.getCurrentDate();
+        long startDate = lastDate - (long) days * 24 * 60 * 60;
 
-        return new BoardInfo(boardDAO.toBoard(), data, status, start, end);
+        List<Data> data = DataService.list(id, startDate, lastDate);
+        List<Status> status = StatusService.list(id, startDate, lastDate);
+
+        return new BoardInfo(boardDAO.toBoard(), data, status, startDate, lastDate);
     }
 
     public static List<Board> list() {

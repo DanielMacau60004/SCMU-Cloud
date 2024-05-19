@@ -13,4 +13,5 @@ public interface StatusRepository extends Repository<StatusDAO> {
     void addBulk(List<StatusDAO> data);
     void removeBulk(List<StatusDAO> data);
     List<StatusDAO> listByIntervalLocation(String id, long start, long end);
+
 }

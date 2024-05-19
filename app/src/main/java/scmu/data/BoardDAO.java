@@ -16,6 +16,7 @@ public class BoardDAO {
     private int state;
 
     private int currentState;
+    private long currentDate;
     private long lastUpdate;
 
     public BoardDAO() {
@@ -25,11 +26,11 @@ public class BoardDAO {
     public BoardDAO(Board b) {
         this(b.getId(), b.getPwd(), b.isActive()
                 , b.getDuration(), b.getHourToStart(), b.getRotation(), b.getState(),
-                b.getCurrentState(), b.getLastUpdate());
+                b.getCurrentState(), b.getCurrentDate(), b.getLastUpdate());
     }
 
     public BoardDAO(String id, String pwd, boolean active, long duration,
-                    long hourToStart, boolean[] rotation, int state, int currentState, long lastUpdate) {
+                    long hourToStart, boolean[] rotation, int state, int currentState, long currentDate, long lastUpdate) {
         super();
         this.id = id;
         this.pwd = pwd;
@@ -39,6 +40,7 @@ public class BoardDAO {
         this.rotation = rotation;
         this.state = state;
         this.currentState = currentState;
+        this.currentDate = currentDate;
         this.lastUpdate = lastUpdate;
 
     }
@@ -131,17 +133,25 @@ public class BoardDAO {
         this.lastUpdate = lastUpdate;
     }
 
+    public long getCurrentDate() {
+        return currentDate;
+    }
+
+    public void setCurrentDate(long currentDate) {
+        this.currentDate = currentDate;
+    }
+
     public Board toBoard() {
         return new Board(id, pwd, active, duration,
-                hourToStart, rotation, state, currentState, lastUpdate);
+                hourToStart, rotation, state, currentState, currentDate, lastUpdate);
     }
 
     @Override
     public String toString() {
-        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", pwd=" + pwd +", active=" + active +
+        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", pwd=" + pwd + ", active=" + active +
                 ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + ", state=" + state
-                + " , currentState=" + currentState + " , lastUpdate=" + lastUpdate + "]";
+                + " , currentState=" + currentState + " , currentDate=" + currentDate + " , lastUpdate=" + lastUpdate + "]";
     }
 
 }
