@@ -8,7 +8,6 @@ public class BoardDAO {
     private String _ts;
 
     private String id;
-    private String pwd;
     private boolean active;
     private long duration;
     private long hourToStart;
@@ -19,21 +18,29 @@ public class BoardDAO {
     private long currentDate;
     private long lastUpdate;
 
+    private boolean smart;
+    private float currentTemp;
+    private float currentHum;
+
+    private String timeZone;
+    private String password;
+
     public BoardDAO() {
 
     }
 
     public BoardDAO(Board b) {
-        this(b.getId(), b.getPwd(), b.isActive()
+        this(b.getId(), b.isActive()
                 , b.getDuration(), b.getHourToStart(), b.getRotation(), b.getState(),
-                b.getCurrentState(), b.getCurrentDate(), b.getLastUpdate());
+                b.getCurrentState(), b.getCurrentDate(), b.getLastUpdate(),
+                b.isSmart(), b.getCurrentTemp(), b.getCurrentHum(), b.getTimeZone(), b.getPassword());
     }
 
-    public BoardDAO(String id, String pwd, boolean active, long duration,
-                    long hourToStart, boolean[] rotation, int state, int currentState, long currentDate, long lastUpdate) {
+    public BoardDAO(String id, boolean active, long duration,
+                    long hourToStart, boolean[] rotation, int state, int currentState, long currentDate, long lastUpdate,
+                    boolean smart, float currentTemp, float currentHum, String timeZone, String password) {
         super();
         this.id = id;
-        this.pwd = pwd;
         this.active = active;
         this.duration = duration;
         this.hourToStart = hourToStart;
@@ -42,6 +49,11 @@ public class BoardDAO {
         this.currentState = currentState;
         this.currentDate = currentDate;
         this.lastUpdate = lastUpdate;
+        this.smart = smart;
+        this.currentTemp = currentTemp;
+        this.currentHum = currentHum;
+        this.timeZone = timeZone;
+        this.password = password;
 
     }
 
@@ -67,14 +79,6 @@ public class BoardDAO {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
     }
 
     public String getId() {
@@ -141,17 +145,60 @@ public class BoardDAO {
         this.currentDate = currentDate;
     }
 
+    public boolean isSmart() {
+        return smart;
+    }
+
+    public void setSmart(boolean smart) {
+        this.smart = smart;
+    }
+
+    public float getCurrentHum() {
+        return currentHum;
+    }
+
+    public void setCurrentHum(float currentHum) {
+        this.currentHum = currentHum;
+    }
+
+    public float getCurrentTemp() {
+        return currentTemp;
+    }
+
+    public void setCurrentTemp(float currentTemp) {
+        this.currentTemp = currentTemp;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
     public Board toBoard() {
-        return new Board(id, pwd, active, duration,
-                hourToStart, rotation, state, currentState, currentDate, lastUpdate);
+        return new Board(id, active, duration,
+                hourToStart, rotation, state, currentState, currentDate, lastUpdate,
+                smart, currentTemp, currentHum, timeZone, password);
     }
 
     @Override
     public String toString() {
-        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", pwd=" + pwd + ", active=" + active +
+        return "BoardDAO[_rid=" + _rid + ", _ts=" + _ts + ", id=" + id + ", active=" + active +
                 ", duration=" + duration + ", hourToStart=" + hourToStart +
                 ", rotation=" + Collections.singletonList(rotation) + ", state=" + state
-                + " , currentState=" + currentState + " , currentDate=" + currentDate + " , lastUpdate=" + lastUpdate + "]";
+                + " , currentState=" + currentState + " , currentDate=" + currentDate + " , lastUpdate=" + lastUpdate
+                + " , smart=" + smart + " , currentTemp=" + currentTemp + " , currentHum=" + currentHum
+                + " , timeZone=" + timeZone + " , password=" + password +"]";
     }
 
 }

@@ -8,6 +8,7 @@ import main.java.scmu.data.Data;
 import main.java.scmu.services.BoardService;
 import main.java.scmu.services.DataService;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @Path("/boards")
@@ -64,20 +65,9 @@ public class BoardResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Board get(@PathParam("id") String id) {
+    public Board get(@PathParam("id") String id, @QueryParam("password") String password) {
         try {
-            return BoardService.get(id);
-        } catch (Exception e) {
-            throw new NotFoundException();
-        }
-    }
-
-    @GET
-    @Path("/{id}/pwd")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Board getPassword(@PathParam("id") String id, @QueryParam("pwd") String pwd) {
-        try {
-            return BoardService.get(id, pwd);
+            return BoardService.get(id, password);
         } catch (Exception e) {
             throw new NotFoundException();
         }

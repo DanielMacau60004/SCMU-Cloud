@@ -6,20 +6,19 @@ import main.java.scmu.srv.MainApplication;
 import main.java.scmu.utils.Hash;
 
 import javax.ws.rs.NotFoundException;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 public class BoardService {
 
     public static Board register(Board board) {
         //Check for nulls
-        if (board.getId() == null || board.getPwd() == null || board.getRotation() == null)
+        if (board.getId() == null || board.getPassword() == null || board.getRotation() == null)
             throw new NotFoundException();
 
         BoardDAO boardDAO = new BoardDAO(board);
-        String hashedPwd = Hash.of(board.getPwd());
-        boardDAO.setPwd(hashedPwd);
-
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
+        boardDAO.setPassword(Hash.of(board.getPassword()));
         board = boardDB.create(boardDAO).toBoard();
 
         DataService.addBulk(boardDAO, board.getData());
@@ -40,6 +39,7 @@ public class BoardService {
         boardDAO.setDuration(board.getDuration());
         boardDAO.setHourToStart(board.getHourToStart());
         boardDAO.setState(board.getState());
+        boardDAO.setSmart(board.isSmart());
 
         DataService.addBulk(boardDAO, board.getData());
         StatusService.addBulk(boardDAO, board.getStatus());
@@ -64,6 +64,10 @@ public class BoardService {
         boardDAO.setCurrentState(board.getCurrentState());
         boardDAO.setCurrentDate(board.getCurrentDate());
         boardDAO.setLastUpdate(board.getLastUpdate());
+        boardDAO.setCurrentTemp(board.getCurrentTemp());
+        boardDAO.setCurrentHum(board.getCurrentHum());
+        boardDAO.setTimeZone(board.getTimeZone());
+
         DataService.addBulk(boardDAO, board.getData());
         StatusService.addBulk(boardDAO, board.getStatus());
 
@@ -73,19 +77,11 @@ public class BoardService {
     }
 
 
-    public static Board get(String id) {
+    public static Board get(String id, String password){
         BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
-        return boardDB.get(id).toBoard();
-    }
-
-    public static Board get(String id, String pwd) {
-        String hashedPwd = Hash.of(pwd);
-        BoardRepository boardDB = MainApplication.DB_LAYER.getBoardsRepository();
-
-        BoardDAO boardDAO = boardDB.get(id);
-        if(boardDAO.getPwd().equals(hashedPwd))
-            return boardDB.get(id).toBoard();
-
+        Board board = boardDB.get(id).toBoard();
+        if(password == null || board.getPassword().equals(Hash.of(password)))
+            return board;
         throw new NotFoundException();
     }
 
